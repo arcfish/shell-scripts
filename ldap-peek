@@ -1,0 +1,10 @@
+last () {
+  echo -e "\033[0;33m"
+  ldapsearch -LLL -x -b "cn=users,dc=directory,dc=net" -h ldap.domain.net sn=$1 givenName sn mail uid
+  echo -e "\033[0m"
+}
+first () {
+  echo -e "\033[0;33m"
+  ldapsearch -LLL -x -b "cn=users,dc=directory,dc=net" -h ldap.domain.net givenName=$1 givenName sn mail uid
+  echo -e "\033[0m"
+}
