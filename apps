@@ -1,0 +1,13 @@
+#!/bin/bash
+# Output key/values for each app in /Applications
+
+find /Applications /Applications/Microsoft\ Office\ 2011/ -type directory -name \*.app -maxdepth 1 | while read fname; do
+    filename=${fname%.*} #remove extension
+    filename=${filename##*/} #remove path
+    filename=${filename// /_} #replace spaces with underscores
+    filename=$(echo $filename| tr '[:upper:]' '[:lower:]') #lowercase everything
+
+    version=$(defaults read "$fname/Contents/Info.plist" CFBundleShortVersionString 2> /dev/null || defaults read "$fname/Contents/Info.plist" CFBundleVersion 2> /dev/null)
+    echo 'app_'$filename'=true'
+    echo 'app_'$filename'_version='$version
+done
